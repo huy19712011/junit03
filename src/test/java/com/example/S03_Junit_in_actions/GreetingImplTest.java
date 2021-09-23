@@ -5,11 +5,11 @@
  */
 package com.example.S03_Junit_in_actions;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
@@ -17,25 +17,46 @@ import org.junit.jupiter.api.function.Executable;
  */
 public class GreetingImplTest {
 
-    /**
-     * Test of greet method, of class GreetingImpl.
-     */
+    private Greeting greetingImpl;
+
+/*
+    // need add this to POM file -> @BeforeEach work
+*/
+//    <build>
+//        <plugins>
+//            <plugin>
+//                <artifactId>maven-surefire-plugin</artifactId>
+//                <version>2.22.2</version>
+//                <dependencies>
+//                    <dependency>
+//                        <groupId>org.junit.platform</groupId>
+//                        <artifactId>junit-platform-surefire-provider</artifactId>
+//                        <version>1.3.2</version>
+//                    </dependency>
+//                </dependencies>
+//            </plugin>
+//        </plugins>
+//    </build>
+
+    @BeforeEach
+    public void setup() {
+
+        System.out.println("before");
+        greetingImpl = new GreetingImpl();
+    }
+
     @Test
     public void testGreet() {
 
-        GreetingImpl greetingImpl = new GreetingImpl();
         String result = greetingImpl.greet("Junit");
+        Assertions.assertNotNull(result);
 
-        assertNotNull(result);
-
-        assertEquals("Hello Junit", result);
+        Assertions.assertEquals("Hello Junit", result);
 
     }
 
     @Test
     public void greetShouldThrowAnException_ForNameIsNull() {
-
-        GreetingImpl greetingImpl = new GreetingImpl();
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             greetingImpl.greet(null);
@@ -46,12 +67,17 @@ public class GreetingImplTest {
     @Test
     public void greetShouldThrowAnException_ForNameIsBlank() {
 
-        GreetingImpl greetingImpl = new GreetingImpl();
-
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             greetingImpl.greet("");
         });
 
+    }
+
+    @AfterEach
+    public void teardown() {
+
+        System.out.println("after");
+        greetingImpl = null;
     }
 
 }

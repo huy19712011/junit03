@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  *
@@ -38,6 +39,17 @@ public class GreetingImplTest {
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             greetingImpl.greet(null);
+        });
+
+    }
+
+    @Test
+    public void greetShouldThrowAnException_ForNameIsBlank() {
+
+        GreetingImpl greetingImpl = new GreetingImpl();
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            greetingImpl.greet("");
         });
 
     }

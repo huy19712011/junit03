@@ -5,6 +5,7 @@
  */
 package com.example.S03_Junit_in_actions;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +28,17 @@ public class GreetingImplTest {
         assertNotNull(result);
 
         assertEquals("Hello Junit", result);
+
+    }
+
+    @Test
+    public void greetShouldThrowAnException_ForNameIsNull() {
+
+        GreetingImpl greetingImpl = new GreetingImpl();
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            greetingImpl.greet(null);
+        });
 
     }
 
